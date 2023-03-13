@@ -1,0 +1,107 @@
+#+Name: Emacs init
+#+AUTHOR: Milton
+#+DESCRIPTIONk: emacs config
+#+PROPERTY: header-args :tangle ./personal.el
+
+* LSP Perf
+#+begin_src emacs-lisp
+  (setq read-process-output-max (* 1024 1024 10))
+#+end_src
+
+* UI Improvements
+
+Setting frame
+#+begin_src emacs-lisp
+  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
+No warning for symlink files
+#+begin_src emacs-lisp
+(setq vc-follow-symlinks t)
+#+end_src
+
+Bar type
+#+begin_src emacs-lisp
+(setq-default cursor-type 'bar)
+#+end_src
+
+
+** Doom modeline
+
+#+begin_src emacs-lisp
+  ;; (setup (:straight minions)
+  ;;   (:hook-into doom-modeline-mode))
+
+
+;; (prelude-require-package 'doom-modeline)
+  ;;   (:hook-into after-init-hook)
+  ;;   (:option doom-modeline-height 15
+  ;;            doom-modeline-bar-width 6
+  ;;            doom-modeline-lsp t
+  ;;            doom-modeline-github nil
+  ;;            doom-modeline-mu4e nil
+  ;;            doom-modeline-irc nil
+  ;;            doom-modeline-battery t
+  ;;            doom-modeline-mirror-modes t
+  ;;            doom-modeline-persp-name nil
+  ;;            doom-modeline-buffer-file-name-style 'relative-to-project
+  ;;            doom-modeline-major-mode-icon t)
+  ;; (custom-set-faces '(mode-line ((t (:height 0.85))))
+  ;;                   '(mode-line-inactive ((t (:height 0.85))))))
+#+end_src
+
+** UI toggles
+#+begin_src emacs-lisp
+  ;; (mjp/leader-key-def
+  ;;   "t" '(:ignore t :which-key "toggles")
+  ;;   "tw" 'whitespace-mode
+  ;;   "tt" '(counsel-load-theme :which-key "choose theme"))
+#+end_src
+
+** Highlighting matching braces
+#+begin_src emacs-lisp
+  ;; (setup (:require paren)
+  ;;   (set-face-attribute 'show-paren-match-expression nil :background "#d8dce2")
+  ;;   (show-paren-mode 1))
+  ;; (require 'paren)
+   (set-face-background 'show-paren-match "#FFE4E1")
+   (set-face-foreground 'show-paren-match  "#0c6e7b")
+   (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+#+end_src
+
+** Theme
+#+begin_src emacs-lisp
+  (setq prelude-theme 'doom-old-hope)
+  (doom-themes-visual-bell-config)
+#+end_src
+
+#+RESULTS:
+: t
+
+** Font
+#+begin_src emacs-lisp
+    (set-face-attribute 'default nil
+                        :font "CaskaydiaCove Nerd Font Mono"
+                        :weight 'normal
+                        :height 170)
+
+    (set-face-attribute 'fixed-pitch nil
+                      :font "CaskaydiaCove Nerd Font Mono"
+                      :weight 'normal
+                      :height 170)
+  (set-face-attribute 'variable-pitch nil
+                      ;; :font "Cantarell"
+                      :font "CaskaydiaCove Nerd Font"
+                      :height 150
+                      :weight 'light)
+
+#+end_src
+
+* Keeping folders clean
+Making sure that spawned transient files are out of folders I'm working in
+#+BEGIN_SRC emacs-lisp
+  ;; Change user-emacs-directory to keep unwanted things out of ~/.config/emacs
+  (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+        url-history-file (expand-file-name "url/history" user-emacs-directory))
+#+END_SRC
